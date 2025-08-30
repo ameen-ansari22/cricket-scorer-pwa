@@ -2,7 +2,7 @@ const CACHE_NAME = "cricket-scorer-cache-v1";
 const urlsToCache = [
   "/",
   "/index.html",
-  "/styles.css",
+  "/style.css",
   "/script.js",
   "/manifest.json"
 ];
