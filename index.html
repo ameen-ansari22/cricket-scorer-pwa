@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Box Cricket Scorer</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#0d6efd">
+
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏏 Box Cricket Scorer</h1>
+        </header>
+
+        <!-- Team Setup Screen -->
+        <section id="team-setup" class="screen active">
+            <h2>Team Setup</h2>
+            <div class="teams-container">
+                <div class="team-section">
+                    <h3>Team A</h3>
+                    <input type="text" id="team-a-name" value="Team A" class="team-name-input">
+                    <div class="players-list" id="team-a-players">
+                        <!-- Players will be dynamically generated -->
+                    </div>
+                </div>
+                <div class="team-section">
+                    <h3>Team B</h3>
+                    <input type="text" id="team-b-name" value="Team B" class="team-name-input">
+                    <div class="players-list" id="team-b-players">
+                        <!-- Players will be dynamically generated -->
+                    </div>
+                </div>
+            </div>
+            <button id="proceed-to-toss" class="btn btn-primary">Proceed to Toss</button>
+        </section>
+
+        <!-- Toss Screen -->
+        <section id="toss-screen" class="screen">
+            <h2>Toss</h2>
+            <div class="toss-options">
+                <div class="form-group">
+                    <label for="match-overs">Match Overs:</label>
+                    <select id="match-overs">
+                        <option value="4">4 Overs</option>
+                        <option value="5">5 Overs</option>
+                        <option value="6" selected>6 Overs</option>
+                        <option value="7">7 Overs</option>
+                        <option value="8">8 Overs</option>
+                        <option value="9">9 Overs</option>
+                        <option value="10">10 Overs</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="toss-winner">Toss Winner:</label>
+                    <select id="toss-winner">
+                        <option value="teamA">Team A</option>
+                        <option value="teamB">Team B</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="toss-decision">Decision:</label>
+                    <select id="toss-decision">
+                        <option value="bat">Bat First</option>
+                        <option value="bowl">Bowl First</option>
+                    </select>
+                </div>
+            </div>
+            <button id="start-match" class="btn btn-primary">Start Match</button>
+        </section>
+
+        <!-- Scoring Screen -->
+        <section id="scoring-screen" class="screen">
+            <div class="scoreboard">
+                <div class="match-info">
+                    <h2 id="current-team">Team A Batting</h2>
+                    <div class="innings-info">
+                        <span id="innings-display">1st Innings</span>
+                        <span id="match-format">6 Overs Match</span>
+                    </div>
+                </div>
+                
+                <div class="score-display">
+                    <div class="main-score">
+                        <span id="total-score">0</span>/<span id="total-wickets">0</span>
+                        <div class="overs-info">
+                            <span id="current-overs">0</span>.<span id="current-balls">0</span> overs
+                        </div>
+                        <!-- Second innings chase info - integrated into score display -->
+                        <div id="chase-info" class="chase-info">
+                            <div class="target-info">Target: <span id="target-runs">0</span></div>
+                            <div class="chase-stats">
+                                <span id="balls-left">0</span> balls (<span id="runs-to-win">0</span> to win)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="run-rates">
+                        <div class="run-rate">CRR: <span id="run-rate">0.00</span></div>
+                        <div id="required-rate" class="run-rate">RRR: <span id="required-rr">0.00</span></div>
+                    </div>
+                </div>
+
+                <div class="batsmen-info">
+                    <div class="batsman" id="striker-info">
+                        <span class="batsman-name">Striker: <span id="striker-name">Player 1</span></span>
+                        <span class="batsman-score"><span id="striker-runs">0</span>(<span id="striker-balls">0</span>)</span>
+                        <span class="strike-rate">SR: <span id="striker-sr">0.00</span></span>
+                    </div>
+                    <div class="batsman" id="non-striker-info">
+                        <span class="batsman-name">Non-Striker: <span id="non-striker-name">Player 2</span></span>
+                        <span class="batsman-score"><span id="non-striker-runs">0</span>(<span id="non-striker-balls">0</span>)</span>
+                        <span class="strike-rate">SR: <span id="non-striker-sr">0.00</span></span>
+                    </div>
+                </div>
+
+                <div id="free-hit-indicator" class="free-hit-indicator">
+                    FREE HIT!
+                </div>
+            </div>
+
+            <div class="scoring-buttons">
+                <div class="run-buttons">
+                    <button class="btn score-btn" data-runs="0">0</button>
+                    <button class="btn score-btn" data-runs="1">1</button>
+                    <button class="btn score-btn" data-runs="2">2</button>
+                    <button class="btn score-btn" data-runs="3">3</button>
+                    <button class="btn score-btn" data-runs="4">4</button>
+                    <button class="btn score-btn" data-runs="6">6</button>
+                </div>
+                <div class="special-buttons">
+                    <button id="wicket-btn" class="btn btn-danger">Wicket</button>
+                    <button id="wide-btn" class="btn btn-warning">Wide</button>
+                    <div class="noball-container">
+                        <button id="noball-btn" class="btn btn-warning">No Ball</button>
+                        <select id="noball-runs-select" class="noball-runs-select">
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="control-buttons">
+                    <button id="undo-btn" class="btn btn-info">Undo</button>
+                    <button id="end-innings-btn" class="btn btn-secondary">End Innings</button>
+                </div>
+            </div>
+
+            <div class="ball-history">
+                <h3>Ball History</h3>
+                <div id="history-container">
+                    <!-- Ball history will be displayed here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Match Summary Screen -->
+        <section id="summary-screen" class="screen">
+            <h2>Match Summary</h2>
+            <div class="summary-content">
+                <div class="final-scores">
+                    <div class="team-summary">
+                        <h3 id="summary-team-a">Team A</h3>
+                        <div class="final-score" id="team-a-final">0/0 (0.0 overs)</div>
+                    </div>
+                    <div class="team-summary">
+                        <h3 id="summary-team-b">Team B</h3>
+                        <div class="final-score" id="team-b-final">0/0 (0.0 overs)</div>
+                    </div>
+                </div>
+                <div class="match-result">
+                    <h2 id="match-result-text">Match Result</h2>
+                </div>
+                <div class="export-section">
+                    <button id="export-csv" class="btn btn-primary">Export Ball-by-Ball CSV</button>
+                    <button id="new-match" class="btn btn-secondary">New Match</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
